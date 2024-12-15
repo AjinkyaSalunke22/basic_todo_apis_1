@@ -1,10 +1,18 @@
 import express from "express";
-import jsonParserMiddleware from "./middlewares/jsonParserMiddleware";
+import jsonParserMiddleware from "./middlewares/jsonParserMiddleware.js";
+import urlEncoderMiddleware from "./middlewares/urlEncoderMiddleware.js";
+import corsMiddleware from "./middlewares/corsMiddleware.js";
+import logerMiddleware from "./middlewares/logerMiddleware.js";
+import securityMiddleware from "./middlewares/securityMiddleware.js";
+import cookieParserMiddleware from "./middlewares/cookieParserMiddleware.js";
 
 const app = express();
 
 app.use(jsonParserMiddleware);
-app.use(express.urlencoded({ extended: true }));
-app.use();
+app.use(urlEncoderMiddleware);
+app.use(corsMiddleware);
+app.use(logerMiddleware);
+app.use(securityMiddleware);
+app.use(cookieParserMiddleware);
 
 export default app;
