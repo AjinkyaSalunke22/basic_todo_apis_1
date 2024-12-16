@@ -1,15 +1,16 @@
 import Users from "../models/userModel.js";
 
 export const createUserController = (req, res) => {
-  const { id, name } = req.body;
+  const { id } = req.body;
 
-  if (Users[id]) {
-    return res.status(409).json({ message: "User id already present" });
-  } else {
-    Users[id] = { id, name };
+  if (!Users[id]) {
+    const user = req.body;
+    Users[id] = user;
     return res
       .status(201)
       .json({ message: "User created successfully", user: Users[id] });
+  } else {
+    return res.status(409).json({ message: "User id already present" });
   }
 };
 
@@ -24,10 +25,10 @@ export const getUserController = (req, res) => {
 };
 
 export const getUsersController = (req, res) => {
-  if (JSON.stringify(Users) === "{}") {
-    return res.status(404).json({ message: "Users not found" });
-  } else {
+  if (JSON.stringify(Users) !== "{}") {
     return res.status(200).json({ message: "Users found", data: Users });
+  } else {
+    return res.status(404).json({ message: "Users not found" });
   }
 };
 
